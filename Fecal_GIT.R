@@ -43,3 +43,6 @@ boxplot(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"],
 ### how to make bar plots with SE bars???
 barplot(mean(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"]),
         mean(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]))
+
+
+https://github.com/travisjguy/Bighorn-Sheep-Fecal-Project.git
