@@ -39,7 +39,55 @@ A busy highway cuts between the mummy range and sheep lakes
 As I have nutritional data for domesticated bighorn sheep and vegetation, I subset my data so that 
 I am only dealing with wild bighorn and fecal nutrient values
 
+===============================================
+Example slide with code:
 
+- This will show the code and the output on the slide
+
+```{r}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+===============================================
+Example slide with code:
+
+- This will not show the code but will show the output
+
+```{r, echo=FALSE}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+===============================================
+Example slide with code:
+
+- This will only show the code
+
+```{r, echo=TRUE, results='hide'}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+===============================================
+Example slide with code:
+
+- This will not show anything on the slide
+
+```{r, echo=FALSE, results='hide'}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+- but you can use the code for a plot
+
+```{r, echo=FALSE}
+boxplot(rnd1)
+```
 
 ===============================================
 ## some basic summary statistics
