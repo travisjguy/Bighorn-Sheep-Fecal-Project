@@ -128,6 +128,24 @@ boxplot(rnd1)
 
 > t.test(fecal_wild_bighorn$P~fecal_wild_bighorn$SEASON)
 
+===================================================
+
+
+```{r, echo=FALSE}
+bighorn <- read.csv("~/Dropbox/Bighorn Sheep Data/Data for R class/Fecal.csv")
+
+library(ggplot2)
+
+library(reshape2)
+
+library(dplyr)
+
+fecal_wild_bighorn <- droplevels(subset(bighorn, bighorn$biomass=="fecal" & bighorn$status=="wild" ))
+
+t.test(fecal_wild_bighorn$P~fecal_wild_bighorn$SEASON) 
+
+```
+
 ==========================================
 ## writing a function for summary stats: mean
 
@@ -180,7 +198,12 @@ with 17 minerals, summary stats for each would get tedious
 
 > fecal_ttest(mineral = "Fe")
 
-===================
+=====================================
+
+
+
+
+
 
 ```{r}
 fecal_ttest <- function(mineral, dat = fecal_wild_bighorn) {
