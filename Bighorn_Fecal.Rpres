@@ -132,6 +132,19 @@ with 17 minerals, summary stats for each would get tedious
 
 > fecal_ttest(mineral = "Fe")
 
+===================
+
+```{r}
+fecal_ttest <- function(mineral, dat = fecal_wild_bighorn) {
+  
+ttest <- t.test(dat[,mineral]~dat$SEASON)
+ 
+return(ttest)
+}
+
+fecal_ttest(mineral = "Fe")
+```
+
 ==========================================
 ## writing a function for box plots
 
@@ -183,9 +196,9 @@ Thank Ewe
 
 ![lambs_ewe](lambs_ewe.png)
 
-
+Slide with code
 ==========================================
-```{}
+```{r}
 summary(cars)
 ```
 
@@ -195,3 +208,35 @@ Slide With Plot
 ```{r, echo=FALSE}
 plot(cars)
 ```
+
+
+=================================================
+
+```{r}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+==========================
+
+- This will not show the code but will show the output
+
+```{r, echo=FALSE}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+=============
+
+
+
+- This will only show the code
+
+```{r, echo=TRUE, results='hide'}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
