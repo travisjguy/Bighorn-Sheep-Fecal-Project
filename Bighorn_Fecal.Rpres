@@ -31,63 +31,29 @@ Horeseshoe Park and Sheep Lakes: Salt lick the bighorn visit during mid-summer
 
 A busy highway cuts between the mummy range and sheep lakes
 
+```{r, echo=FALSE, results='hide'}
+bighorn <- read.csv("~/Dropbox/Bighorn Sheep Data/Data for R class/Fecal.csv")
+
+library(ggplot2)
+
+library(reshape2)
+
+library(dplyr)
+```
+
 
 ===============================================
+
+```{r, echo=FALSE, results='hide'}
+fecal_wild_bighorn <- droplevels(subset(bighorn, bighorn$biomass=="fecal" & bighorn$status=="wild" ))
+```
 
 > fecal_wild_bighorn <- droplevels(subset(bighorn, bighorn$biomass=="fecal" & bighorn$status=="wild" ))
 
 As I have nutritional data for domesticated bighorn sheep and vegetation, I subset my data so that 
 I am only dealing with wild bighorn and fecal nutrient values
 
-===============================================
-Example slide with code:
 
-- This will show the code and the output on the slide
-
-```{r}
-rnd1 <- rnorm(100, 2, 0.5)
-rnd2 <- rnorm(100, 1.5, 0.5)
-t.test(rnd1, rnd2)
-```
-
-===============================================
-Example slide with code:
-
-- This will not show the code but will show the output
-
-```{r, echo=FALSE}
-rnd1 <- rnorm(100, 2, 0.5)
-rnd2 <- rnorm(100, 1.5, 0.5)
-t.test(rnd1, rnd2)
-```
-
-===============================================
-Example slide with code:
-
-- This will only show the code
-
-```{r, echo=TRUE, results='hide'}
-rnd1 <- rnorm(100, 2, 0.5)
-rnd2 <- rnorm(100, 1.5, 0.5)
-t.test(rnd1, rnd2)
-```
-
-===============================================
-Example slide with code:
-
-- This will not show anything on the slide
-
-```{r, echo=FALSE, results='hide'}
-rnd1 <- rnorm(100, 2, 0.5)
-rnd2 <- rnorm(100, 1.5, 0.5)
-t.test(rnd1, rnd2)
-```
-
-- but you can use the code for a plot
-
-```{r, echo=FALSE}
-boxplot(rnd1)
-```
 
 ===============================================
 ## some basic summary statistics
@@ -95,9 +61,16 @@ boxplot(rnd1)
 ### Mean post (for P)
 > mean(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"])  
 
+```{r, echo=FALSE}
+mean(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"]) 
+```
+
 ### Mean pre (for P)
 > mean(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"])
 
+```{r, echo=FALSE}
+mean(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]) 
+```
 
 ===============================================
 ##  some basic summary statistics
@@ -105,9 +78,15 @@ boxplot(rnd1)
 ### standard deviation for post and pre (for P)
 > sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"]) 
 
+```{r, echo=FALSE}
+sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"]) 
+```
+
 > sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]) 
 
-
+```{r, echo=FALSE}
+sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]) 
+```
 
 ==========================================
 
@@ -118,9 +97,20 @@ boxplot(rnd1)
 
 > sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"])/   
   sqrt(length(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"]))
+  
+```{r, echo=FALSE}
+sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"])/   
+  sqrt(length(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"]))
+```  
 
 > sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"])/ 
   sqrt(length(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]))
+
+```{r, echo=FALSE}
+sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"])/ 
+  sqrt(length(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]))
+```  
+  
   
   
 ===========================================
@@ -128,25 +118,13 @@ boxplot(rnd1)
 
 > t.test(fecal_wild_bighorn$P~fecal_wild_bighorn$SEASON)
 
+```{r, echo=FALSE}
+t.test(fecal_wild_bighorn$P~fecal_wild_bighorn$SEASON)
+``` 
+
 ===================================================
 
 
-```{r, echo=FALSE}
-bighorn <- read.csv("~/Dropbox/Bighorn Sheep Data/Data for R class/Fecal.csv")
-
-library(ggplot2)
-
-library(reshape2)
-
-library(dplyr)
-
-fecal_wild_bighorn <- droplevels(subset(bighorn, bighorn$biomass=="fecal" & bighorn$status=="wild" ))
-
-t.test(fecal_wild_bighorn$P~fecal_wild_bighorn$SEASON) 
-
-```
-
-==========================================
 ## writing a function for summary stats: mean
 
 with 17 minerals, summary stats for each would get tedious
@@ -157,11 +135,55 @@ with 17 minerals, summary stats for each would get tedious
 >  return(mean_prepost)  
 > }  
 
-> fecal_mean(mineral = "Fe", season = "pre")  
+
+```{r, echo=FALSE}
+ fecal_mean <- function(mineral, season, dat = fecal_wild_bighorn)  {  
+  mean_prepost <- mean(dat[dat$SEASON == season, mineral]) 
+  
+  return(mean_prepost)  
+ }  
+
+
+``` 
+
+
+
+==============================================
+
+> fecal_mean(mineral = "Fe", season = "pre") 
+
+```{r, echo=FALSE}
+ fecal_mean(mineral = "Fe", season = "pre") 
+``` 
+
 > fecal_mean(mineral = "Fe", season = "Post")
+
+```{r, echo=FALSE}
+ fecal_mean(mineral = "Fe", season = "Post") 
+``` 
+
+> fecal_mean(mineral = "K", season = "pre") 
+
+```{r, echo=FALSE}
+ fecal_mean(mineral = "K", season = "pre") 
+``` 
+
+> fecal_mean(mineral = "K", season = "Post")
+
+```{r, echo=FALSE}
+ fecal_mean(mineral = "K", season = "Post") 
+```
 
 ==========================================
 ## writing a function for summary stats: st. dev
+
+```{r, echo=FALSE}
+ fecal_sd <- function(mineral, season, dat = fecal_wild_bighorn){
+   sd_prepost <- sd(dat[dat$SEASON == season, mineral])
+  
+ return(sd_prepost)
+}
+```
 
 > fecal_sd <- function(mineral, season, dat = fecal_wild_bighorn){
 >   sd_prepost <- sd(dat[dat$SEASON == season, mineral])
@@ -172,9 +194,23 @@ with 17 minerals, summary stats for each would get tedious
 > fecal_sd(mineral = "Fe", season = "Post")  
 > fecal_sd(mineral = "Fe", season = "pre")
 
+```{r, echo=FALSE}
+ fecal_sd(mineral = "Fe", season = "Post")  
+ fecal_sd(mineral = "Fe", season = "pre")
+```
+
 
 ==========================================
 ## writing a function for summary stats: st. error
+
+```{r, echo=FALSE}
+ fecal_se <- function(mineral, season, dat = fecal_wild_bighorn){
+  se_prepost <- sd(dat[dat$SEASON == season, mineral])/
+   sqrt(length(dat[dat$SEASON == season, mineral]))
+  
+ return(se_prepost)
+}
+```
 
 > fecal_se <- function(mineral, season, dat = fecal_wild_bighorn){
 >  se_prepost <- sd(dat[dat$SEASON == season, mineral])/
@@ -183,8 +219,14 @@ with 17 minerals, summary stats for each would get tedious
 >  return(se_prepost)
 }
 
+
 > fecal_se(mineral = "Fe", season = "Post")  
 > fecal_se(mineral = "Fe", season = "pre")
+
+```{r, echo=FALSE}
+ fecal_se(mineral = "Fe", season = "Post")  
+ fecal_se(mineral = "Fe", season = "pre")
+```
 
 ==========================================
 ## writing a function for a t-test
@@ -196,27 +238,23 @@ with 17 minerals, summary stats for each would get tedious
 > return(ttest)
 }
 
-> fecal_ttest(mineral = "Fe")
-
-=====================================
-
-
-
-
-
-
-```{r}
+```{r, echo=FALSE}
 fecal_ttest <- function(mineral, dat = fecal_wild_bighorn) {
   
-ttest <- t.test(dat[,mineral]~dat$SEASON)
+  ttest <- t.test(dat[,mineral]~dat$SEASON)
  
-return(ttest)
+ return(ttest)
 }
+```
 
+> fecal_ttest(mineral = "Fe")
+
+```{r, echo=FALSE}
 fecal_ttest(mineral = "Fe")
 ```
 
-==========================================
+=====================================
+
 ## writing a function for box plots
 
 > fecal_boxplot <- function(mineral, dat = fecal_wild_bighorn){
@@ -226,6 +264,16 @@ fecal_ttest(mineral = "Fe")
 }
 
 > fecal_boxplot(mineral = 'Fe')
+
+```{r, echo=FALSE}
+ fecal_boxplot <- function(mineral, dat = fecal_wild_bighorn){
+  box <- boxplot(dat[dat$SEASON == "Post", mineral],
+                 (dat[dat$SEASON == "pre", mineral]))
+  return(box)
+}
+
+fecal_boxplot(mineral = 'Fe')
+```
 
 
 ==========================================
@@ -241,6 +289,15 @@ then create summary values for error bars
 > bighorn_summary <- bighorn_melt %>% group_by(SEASON, mineral) %>%   
   summarize(mean_mineral = mean(value), ymin = mean(value)-sd(value)/sqrt(n()),  
             ymax = mean(value) + sd(value)/sqrt(n()))
+            
+```{r, echo=FALSE, results='hide'}
+bighorn_melt <-melt(fecal_wild_bighorn, measure.vars = 10:25, variable.name="mineral")
+
+bighorn_summary <- bighorn_melt %>% group_by(SEASON, mineral) %>%   
+  summarize(mean_mineral = mean(value), ymin = mean(value)-sd(value)/sqrt(n()),  
+            ymax = mean(value) + sd(value)/sqrt(n()))
+
+```
 
 ==========================================
 ## Bar Plots
@@ -248,6 +305,12 @@ then create summary values for error bars
 > ggplot(subset(bighorn_summary, mineral == "K"), aes (x = SEASON, y = mean_mineral)) + 
   geom_point(colour = "blue") + geom_bar(stat="identity", fill="olivedrab2") + 
   facet_wrap(~mineral) + geom_errorbar( aes(ymin = ymin, ymax = ymax, width = 0.25))
+  
+  ```{r, echo=FALSE}
+ ggplot(subset(bighorn_summary, mineral == "K"), aes (x = SEASON, y = mean_mineral)) + 
+  geom_point(colour = "blue") + geom_bar(stat="identity", fill="olivedrab2") + 
+  facet_wrap(~mineral) + geom_errorbar( aes(ymin = ymin, ymax = ymax, width = 0.25))
+```
 
 ==========================================
 ## Bar Plots
@@ -260,36 +323,77 @@ a function to make it easier to make plots for all minerals
   return(f_bar)
 }
 
+ ```{r, echo=FALSE}
+ fecal_barplot <- function(nutrient, bdat = bighorn_summary){
+  f_bar <-ggplot(subset(bdat, mineral == nutrient), aes (x = SEASON, y = mean_mineral)) +
+    geom_bar(stat = "identity", fill="olivedrab2") + facet_wrap(~mineral) + 
+    geom_errorbar( aes(ymin = ymin, ymax = ymax, width =0.3))
+  return(f_bar)
+}
+ 
+```
+
+
+
+===================================
+
 > fecal_barplot(nutrient = "Fe")
+
+ ```{r, echo=FALSE}
+fecal_barplot(nutrient = "Fe")
+```
+
+***********************
+
+> fecal_barplot(nutrient = "K")
+
+```{r, echo=FALSE}
+fecal_barplot(nutrient = "K")
+```
+
+======================================
+
+# Veg Analysis
+
+```{r, echo=FALSE, results = 'hide'}
+veg <- read.csv("~/Dropbox/Bighorn Sheep Data/Data for R class/veg.csv")
+
+head(veg)
+
+library("dplyr")
+
+library("stringr")
+
+library("magrittr")
+```
+
+
+> length_veg <- sum(veg$Length)  
+
+> total_length <- veg %>% group_by(Species) %>%
+  summarize(total_length = sum(Length),
+            percent_length = sum(Length)/length_veg)
+
+> head(total_length)
+
+```{r, echo=FALSE, results = 'hide'}
+length_veg <- sum(veg$Length)    ## finds the total length of all transects combined
+
+total_length <- veg %>% group_by(Species) %>%
+  summarize(total_length = sum(Length),
+            percent_length = sum(Length)/length_veg)
+
+head(total_length)
+```
 
 ==========================================
 Thank Ewe
 
 ![lambs_ewe](lambs_ewe.png)
 
-Slide with code
-==========================================
-```{r}
-summary(cars)
-```
-
-Slide With Plot
-========================================================
-
-```{r, echo=FALSE}
-plot(cars)
-```
+===========================
 
 
-=================================================
-
-```{r}
-rnd1 <- rnorm(100, 2, 0.5)
-rnd2 <- rnorm(100, 1.5, 0.5)
-t.test(rnd1, rnd2)
-```
-
-==========================
 
 - This will not show the code but will show the output
 
@@ -310,4 +414,34 @@ rnd1 <- rnorm(100, 2, 0.5)
 rnd2 <- rnorm(100, 1.5, 0.5)
 t.test(rnd1, rnd2)
 ```
+
+===============================================
+Example slide with code:
+
+- This will show the code and the output on the slide
+
+```{r}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+===========
+
+Example slide with code:
+
+- This will not show anything on the slide
+
+```{r, echo=FALSE, results='hide'}
+rnd1 <- rnorm(100, 2, 0.5)
+rnd2 <- rnorm(100, 1.5, 0.5)
+t.test(rnd1, rnd2)
+```
+
+- but you can use the code for a plot
+
+```{r, echo=FALSE}
+boxplot(rnd1)
+```
+
+===============================================
 
