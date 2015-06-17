@@ -26,13 +26,12 @@ sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "Post"])/   ##SE post
 
 ### try to write a function so can do all minerals quickly
 
-fecal_ttest <- function(mineral = x)  {
-  mean_pre  <- mean(fecal_wild_bighorn$"x"[fecal_wild_bighorn$SEASON == "pre"])
+fecal_ttest <- function(mineral, dat = fecal_wild_bighorn)  {
+  mean_pre  <- mean(dat[dat$SEASON == "pre", mineral])
   return(mean_pre)
-  
 }
 
-fecal_ttest(mine"K")
+fecal_ttest(mineral = "K")
 
 sd(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"])/   ## SE pre
   sqrt(length(fecal_wild_bighorn$P[fecal_wild_bighorn$SEASON == "pre"]))
